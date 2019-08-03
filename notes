@@ -1,11 +1,17 @@
+If using Sublimetext, consider installing Dockerfile Syntax Highlighting
+
 To pick up where you left off : docker-machine ls (checks that Char exists)
                               : docker-machine restart Char (restarts the Char machine)
                               : re-run eval$(docker-machine env Char) to set up environment variables
 
+------
+PART 1
+------
+
 01 : use --driver to use the virtualbox driver
-02 
+02 :
 03 : eval() evaluates the command before executing (why do we have to do this?)
-04
+04 : 
 05 : despite saying it "runs a command" inside a new container, the run command actually launches a new container (whereas "start" does not). "launch" is not a command.
 06 : visit http://<ip of Char>:5000 in browser to verify it works
    : -d runs container in background
@@ -37,6 +43,13 @@ PART 2
    : Use the Linux one, not the mac one... ewps
    : Testing process for this is annoying - requires download of teamspeak client & some configuring
 02 : This is going to be stupid
+   : https://blog.codeship.com/running-rails-development-environment-docker/
+   : http://guides.rubyonrails.org/command_line.html#rails-dbconsoles
+   : https://bundler.io/v2.0/bundle_install.html
+   : https://dev.to/neshaz/how-to-use-rake-db-commands-in-the-correct-way--50o2
+   : sure was stupid
+   : >> fix: debconf: delaying package configuration, since apt-utils is not installed
+
 
 
 ---------------
