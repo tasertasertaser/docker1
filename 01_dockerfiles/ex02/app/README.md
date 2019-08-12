@@ -1,34 +1,16 @@
-KANBAN 看板
-===========
-`
-bundle install
-rails s
-`
-
-Demo
-----
-Live demo hosted here on Heroku (database is reset daily):
-[**LIVE DEMO**](http://kanban.seanomlor.com)
-
-[![Screenshot](/app/assets/images/screenshot.jpg)](http://kanban.seanomlor.com)
-
-Summary
--------
-Kanban is a work-in-progress Trello clone.
-
-Built with Ruby on Rails on the backend as a JSON API for Backbone.js on the frontend.
-
-Notes
------
-* Hand-rolled Rails user authentication with BCrypt
-* Custom, nested Rails JSON templating with [Rabl](https://github.com/nesquena/rabl)
-* Backbone models/collections with [Backbone-relational.js](http://backbonerelational.org/)
-* Auto-updating comment timestamps with jQuery [timeago](http://timeago.yarp.com)
-* Editable board, list and card titles with jQuery [JEditable](http://www.appelsiini.net/projects/jeditable)
-
-License
--------
-Kanban is released under the [MIT License](/LICENSE).
-
 ---
-Developed by [Sean Omlor](http://seanomlor.com)
+topic: Ruby on Rails Hello World
+languages:
+  - ruby
+products:
+  - Azure App Service
+  - Azure Web Apps
+---
+
+# Ruby on Rails Hello World
+
+This sample demonstrates the default Ruby on Rails app for [App Service on Linux](https://docs.microsoft.com/azure/app-service/containers).
+
+# Contributing
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

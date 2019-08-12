@@ -10,33 +10,63 @@
 #                                                                              #
 # **************************************************************************** #
 
-FROM ruby:2.3.0
+# FROM ruby:latest
+# RUN apt-get update -y && apt-get install -y \
+# 	build-essential \
+# 	libpq-dev \
+# 	nodejs \
+# 	sqlite3 \
+# 	gem
+# RUN gem install bundler --no-document
+# RUN gem install rails --no-document
+# RUN gem install rake -v 12.3.2 --no-document
+# 
+# # Run on ft-rails:on-build
+# ONBUILD COPY app /opt/app
+# ONBUILD WORKDIR /opt/app
+# ONBUILD EXPOSE 3000
+# ONBUILD RUN bundle install
+# ONBUILD RUN rake db:migrate
+# ONBUILD RUN rake db:seed
+# ONBUILD RUN rake
 
-ONBUILD COPY app /opt/app
 
-# Install dependencies required to run Rails & RubyGems,
-# including SQL client, 
-# Use apt-get since Ruby image is based on a Debian image
-RUN apt-get update
-RUN apt-get install -y mysql-client sqlite3 --no-install-recommends
-RUN gem install rails --version 4.2.4
-RUN mkdir -p /opt/app
+FROM ruby:2.6.2
 
-WORKDIR /opt/app
+# || INSTALL REQUIRED PACKAGES ||
+#	sqlite3
+#	gem
+#	rails
+RUN apt-get update && apt-get install -y \
+	nodejs \
+	sqlite3 \
+	gem 
 
-ONBUILD ADD app /opt/app
-# makes sure all dependencies in your Gemfile are available in your app
-ONBUILD RUN bundle install
-# runs any migrations it finds 
-# more info on rake at https://dev.to/neshaz/how-to-use-rake-db-commands-in-the-correct-way--50o2
-ONBUILD RUN rake db:migrate
-ONBUILD RUN rake db:schema:load
-ONBUILD RUN rake db:seed
+# || INSTALL REQUIRED GEMS ||
+RUN gem install bundler
+RUN gem install rake -v 12.3.2
+RUN gem install rails
 
-# Expose port 3000 to Docker host for outside access
+# || CREATE APP DIRECTORY ||
+# RUN mkdir -p /opt/app
+
+# || EXPOSE PORT ||
 ONBUILD EXPOSE 3000
+# || MOVE PROJECT ||
+#	runs any migrations it finds 
+#	more info on rake at https://dev.to/neshaz/how-to-use-rake-db-commands-in-the-correct-way--50o2
+ONBUILD COPY app /opt/app
+ONBUILD WORKDIR /opt/app
+ONBUILD RUN bundle install
+ONBUILD RUN rake db:migrate
+ONBUILD RUN rake db:seed
+ONBUILD RUN rake
 
-# TO BUILD : docker build -t ft-rails:on-build .
-# use this from INSIDE the ft_rails folder, otherwise access is denied
-# TO LAUNCH : docker run -it --rm ft-rails:on-build
-# TO TEST : ????
+#------
+# USAGE
+#------
+
+# TO BUILD : docker build -t ft-rails:on-build -f ft-rails/Dockerfile .
+#          : docker build -t scones .
+# TO LAUNCH : docker run -it --rm -p 3000:3000 scones
+# TO TEST : 
