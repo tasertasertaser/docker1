@@ -10,27 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-# FROM ruby:latest
-# RUN apt-get update -y && apt-get install -y \
-# 	build-essential \
-# 	libpq-dev \
-# 	nodejs \
-# 	sqlite3 \
-# 	gem
-# RUN gem install bundler --no-document
-# RUN gem install rails --no-document
-# RUN gem install rake -v 12.3.2 --no-document
-# 
-# # Run on ft-rails:on-build
-# ONBUILD COPY app /opt/app
-# ONBUILD WORKDIR /opt/app
-# ONBUILD EXPOSE 3000
-# ONBUILD RUN bundle install
-# ONBUILD RUN rake db:migrate
-# ONBUILD RUN rake db:seed
-# ONBUILD RUN rake
-
-
 FROM ruby:2.6.2
 
 # || INSTALL REQUIRED PACKAGES ||
@@ -47,12 +26,10 @@ RUN gem install bundler
 RUN gem install rake -v 12.3.2
 RUN gem install rails
 
-# || CREATE APP DIRECTORY ||
-# RUN mkdir -p /opt/app
-
 # || EXPOSE PORT ||
 ONBUILD EXPOSE 3000
-# || MOVE PROJECT ||
+
+# || MOVE & SETUP PROJECT ||
 #	runs any migrations it finds 
 #	more info on rake at https://dev.to/neshaz/how-to-use-rake-db-commands-in-the-correct-way--50o2
 ONBUILD COPY app /opt/app
@@ -69,4 +46,4 @@ ONBUILD RUN rake
 # TO BUILD : docker build -t ft-rails:on-build -f ft-rails/Dockerfile .
 #          : docker build -t scones .
 # TO LAUNCH : docker run -it --rm -p 3000:3000 scones
-# TO TEST : 
+# TO TEST : visit http://[machine ip]:3000

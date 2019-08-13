@@ -1,27 +1,41 @@
 If using Sublimetext, consider installing Dockerfile Syntax Highlighting
 
-To pick up where you left off : docker-machine ls (checks that Char exists)
+----------------------
+GENERALLY USEFUL STUFF
+----------------------
+
+To pick up where you left off : docker-machine ls (list machines)
                               : docker-machine restart Char (restarts the Char machine)
-                              : re-run eval$(docker-machine env Char) to set up environment variables
+                              : re-run eval$(docker-machine env Char) to run docker commands inside that machine
+
+To get into a running container : docker exec -it containername bash
+
+To set memory when you spawn the machine use the --virtualbox-memory flag.
+   :  1024 is the default.
+   :  >  docker-machine create -d virtualbox --virtualbox-memory 2048 machine_name
+
+QUITE IMPORTANT: Before launching the machine for the bonus part, run:
+> export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
+This fixes this problem: https://github.com/testdrivenio/testdriven-app-2.2/issues/15 
 
 ------
 PART 1
 ------
 
 01 : use --driver to use the virtualbox driver
-02 :
 03 : eval() evaluates the command before executing (why do we have to do this?)
-04 : 
-05 : despite saying it "runs a command" inside a new container, the run command actually launches a new container (whereas "start" does not). "launch" is not a command.
+05 : despite saying it "runs a command" inside a new container, the 
+      run command actually launches a new container (whereas 
+      "start" does not). "launch" is not a command.
 06 : visit http://<ip of Char>:5000 in browser to verify it works
    : -d runs container in background
    : -p publishes container's ports to host
+09 : see list of available packages at 
 12 : -e sets an environment variable (here, MYSQL_ROOT_PASSWORD) 
    : --restart=always means the container can restart on its own
 14 : --link <container-name> allows this container to use that as a database
    : don't forget -p!
-19 : Why does this container's name come out hashed?
-   : install Flask with pip install Flask (if in background, use docker exec Abathur [...])
+19 : install Flask with pip install Flask (if in background, use docker exec Abathur [...])
    : I really tried to echo this bullshit into the file without Vimming it open but line 3 wasn't having it
 20 : use --advertise-addr to specify the address advertised to other members of the swarm, for API access & networking
 22 : unclear why these are all joined to port 2377 but everyone did that so I did too
@@ -36,21 +50,55 @@ PART 1
 PART 2
 ------
 
-00 : Why do you need to create the image and launch the container separately? Why can't you launch the container with a command in the actual Dockerfile? That seems like it would be better in every way.
-   : Be sure to run with -i to keep stdin open -- otherwise Vim starts but is broken
+00 : Be sure to run with -i to keep stdin open -- otherwise Vim starts but is broken
    : Still unsure why -t is necessary
+
 01 : https://www.hostinger.com/tutorials/how-to-make-a-teamspeak-3-server/
    : Use the Linux one, not the mac one... ewps
    : Testing process for this is annoying - requires download of teamspeak client & some configuring
+
 02 : This is going to be stupid
    : https://blog.codeship.com/running-rails-development-environment-docker/
    : http://guides.rubyonrails.org/command_line.html#rails-dbconsoles
    : https://bundler.io/v2.0/bundle_install.html
    : https://dev.to/neshaz/how-to-use-rake-db-commands-in-the-correct-way--50o2
    : sure was stupid
-   : >> fix: debconf: delaying package configuration, since apt-utils is not installed
 
+03 : HOOOO BOY
 
+   : check vbrazhni's very good readme, it details a lot of snags you will run into
+   : https://github.com/VBrazhnik/docker-1/wiki/Dockerfiles
+
+   : This build takes a long time - somewhere in the range of 10-20 minutes.
+   : Even after the build appears complete, Gitlab can take >10 minutes to
+   :  start responding to browser queries.
+
+   : Here are some ways to make it take less time.
+
+   : Make sure you create a symbolic link/goinfre setup as it says in the PDF before doing this
+   : This will make the build faster
+
+   : Setting more RAM for the VM will make the build faster.
+   :  To set memory when you spawn the machine use the --virtualbox-memory flag.
+   :  1024 is the default.
+   :  >  docker-machine create -d virtualbox --virtualbox-memory 2048 machine_name
+
+   : You can also assign more virtual CPU cores to the docker machine. 
+   :  >  docker-machine create -d virtualbox --virtualbox-cpu-count "2" machine_name
+
+   : You can even change this after you have created the machine
+   :  >  docker-machine stop machine_name
+   :  >  VBoxManage modifyvm machine_name --cpus 2
+   :  >  VBoxManage modifyvm machine_name --memory 4096
+   :  >  docker-machine start machine_name
+
+-----
+BONUS
+-----
+
+BEFORE launching the machine for the bonus part, run:
+> export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
+This fixes this problem: https://github.com/testdrivenio/testdriven-app-2.2/issues/15
 
 ---------------
 FURTHER READING

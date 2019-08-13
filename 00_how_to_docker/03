@@ -1,4 +1,8 @@
 eval $(docker-machine env Char)
-#this is the thing that connects your shell to the VM.
-#it's pretty annoying to do every time so I made a bash function to shorten it to just "VM <machine name>"
-#example: VM Char
+
+# this is the thing that connects your shell to the VM.
+# it's pretty annoying to do every time,
+# so I use this bash function to shorten it to just "DMenv <machine name>"
+# DMenv(){
+#	eval $(docker-machine env $1)
+# }
