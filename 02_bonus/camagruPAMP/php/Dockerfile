@@ -11,6 +11,7 @@ RUN docker-php-ext-install intl
 RUN  apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
 # Install php-soap
+RUN rm /etc/apt/preferences.d/no-debian-php
 RUN apt-get update -y && apt-get install -y libxml2-dev php-soap && apt-get clean -y
 RUN docker-php-ext-install soap
 
@@ -22,20 +23,16 @@ RUN yes '' | pecl install imagick-beta
 RUN apt-get update -y && apt-get install -y libmcrypt-dev
 RUN docker-php-ext-install mcrypt
 
-# || INSTALL COMPOSER ||
+# Install composer
 ADD composer-install.sh /usr/local/bin/composer-install.sh
 RUN /usr/local/bin/composer-install.sh && mv composer.phar /usr/bin/composer
 
-# || INSTALL PACKAGES ||
-#	git
-#	zip
-#	unzip
-
+# Install Git zip & unzip
 RUN apt-get update && apt-get install -y git zip unzip
 
 # Setup system configurations
-COPY php.ini /usr/local/etc/php/
-COPY vhost.conf /etc/apache2/sites-enabled/
+COPY /defaults/php.ini /usr/local/etc/php/
+COPY /defaults/vhost.conf /etc/apache2/sites-enabled/
 RUN rm /etc/apache2/sites-enabled/000-default.conf
 
 # Enable rewrite module
@@ -44,5 +41,5 @@ RUN ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rew
 # Ensure www-data has necessary permission
 RUN usermod -u 1000 www-data
 
-COPY bootstrap.sh /usr/local/bin/bootstrap.sh
+COPY /defaults/bootstrap.sh /usr/local/bin/bootstrap.sh
 CMD ["bootstrap.sh"]

@@ -14,7 +14,8 @@ To set memory when you spawn the machine use the --virtualbox-memory flag.
    :  1024 is the default.
    :  >  docker-machine create -d virtualbox --virtualbox-memory 2048 machine_name
 
-QUITE IMPORTANT: Before launching the machine for the bonus part, run:
+QUITE IMPORTANT: Before launching a machine for the bonus part, run this
+   command INSIDE the directory of the .yml file:
 > export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
 This fixes this problem: https://github.com/testdrivenio/testdriven-app-2.2/issues/15 
 
@@ -96,7 +97,7 @@ PART 2
 BONUS
 -----
 
-BEFORE launching the machine for the bonus part, run:
+BEFORE launching the machine for the bonus part, run this command INSIDE the folder of the .yml file:
 > export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
 This fixes this problem: https://github.com/testdrivenio/testdriven-app-2.2/issues/15
 

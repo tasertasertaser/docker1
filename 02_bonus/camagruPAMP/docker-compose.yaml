@@ -15,7 +15,7 @@ services:
   php:
     build: ./php
     ports:
-      - "80:80"
+      - "5000:80"
     volumes:
       - ./src:/docker-pamp/src
     working_dir: /docker-pamp/src
@@ -35,3 +35,10 @@ services:
 
 volumes:
   db_data:
+
+#------
+# USAGE
+#------
+# TO BUILD : docker-compuse up
+# TO TEST : visit http://[machine ip]:8081
+#   should display PHPmyadmin login
