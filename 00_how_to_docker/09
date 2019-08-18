@@ -1,7 +1,1 @@
-apt-get update; apt-get upgrade -y
-apt-get install -y build-essential git
-
-# build-essential installs GNU GCC compiler & dev environment
-# more info at https://bit.ly/2sndxXr
-# -y flag automatically agrees to prompt
-# to view installed packages: apt list --installed
+apt-get update; apt-get upgrade -y; apt-get install -y build-essential git

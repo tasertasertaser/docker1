@@ -1,3 +1,8 @@
+###################################################
+#       A containerized version of 42 PAMP        #
+#  Includes dependencies needed to build Camagru  #
+###################################################
+
 version: '3'
 services:
   db:

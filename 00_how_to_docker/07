@@ -1,2 +1,1 @@
 docker inspect --format '{{.NetworkSettings.IPAddress}}' overlord
-# can also use with container ID

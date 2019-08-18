@@ -1,16 +1,8 @@
-docker run --name Abathur -v ~/:/root -p 3000:3000 -it python:2-slim bash
-
-pip install flask && apt-get update && apt-get upgrade -y && apt-get install vim -y && vim /root/app.py
-
-from flask import Flask
-app = Flask(__name__)
-@app.route('/')
-def hw():
-    return ("<h1>Hello, World!</h1>")
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
-
-python /root/app.py
-
-curl http://$(docker-machine ip Char):3000/
+docker run -dit \
+	--name Abathur \
+	-v ~/:/root \
+	-p 3000:3000 \
+	python:2-slim
+docker exec Abathur pip install Flask
+docker exec Abathur sh -c "echo 'from flask import Flask\n\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef hello():\n    return \"<h1>Hello, World\!</h1>\"' > hello.py"
+docker exec Abathur env FLASK_APP=hello.py flask run --host=0.0.0.0 --port 3000

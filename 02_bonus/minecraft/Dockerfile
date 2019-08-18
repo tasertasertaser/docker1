@@ -1,3 +1,7 @@
+##################################################
+#      A simple Minecraft server container       #
+##################################################
+
 FROM debian
 
 RUN apt-get update && apt-get upgrade -y \
@@ -16,5 +20,5 @@ ENTRYPOINT java -Xmx1024M -Xms1024M -jar server.jar
 #------
 # USAGE
 #------
-# TO BUILD : docker-build -t yesthisisjazz
-# TO TEST : docker run --rm -d -p 25565:25565 --name mineserv yesthisisjazz
+# TO BUILD : docker build -t mineserv_img .
+# TO TEST : docker run --rm -d -p 25565:25565 --name mineserv_img mineserv_cont

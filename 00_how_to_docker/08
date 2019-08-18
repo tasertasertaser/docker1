@@ -1,1 +1,1 @@
-docker run -it --rm --restart=always alpine
+docker run -it --rm alpine

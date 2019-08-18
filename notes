@@ -24,27 +24,52 @@ PART 1
 ------
 
 01 : use --driver to use the virtualbox driver
-03 : eval() evaluates the command before executing (why do we have to do this?)
+
+03 : this is the thing that connects your shell to the VM.
+     it's pretty annoying to do every time,
+     so I use this bash function to shorten it to just "DMenv <machine name>"
+         DMenv(){
+          eval $(docker-machine env $1)
+         }
+
 05 : despite saying it "runs a command" inside a new container, the 
       run command actually launches a new container (whereas 
       "start" does not). "launch" is not a command.
+
 06 : visit http://<ip of Char>:5000 in browser to verify it works
    : -d runs container in background
    : -p publishes container's ports to host
-09 : see list of available packages at 
+
+07 : can also use with container ID
+
+09 : to test:
+   : printf "#include <unistd.h> \n int main(void){ write(1, \"A\", 1); return(0);}" > test.c
+   : build-essential installs GNU GCC compiler & dev environment
+   : more info at https://bit.ly/2sndxXr
+   : -y flag automatically agrees to prompt
+   : to view installed packages: apt list --installed
+
 12 : -e sets an environment variable (here, MYSQL_ROOT_PASSWORD) 
    : --restart=always means the container can restart on its own
+
 14 : --link <container-name> allows this container to use that as a database
    : don't forget -p!
+
 19 : install Flask with pip install Flask (if in background, use docker exec Abathur [...])
    : I really tried to echo this bullshit into the file without Vimming it open but line 3 wasn't having it
+
 20 : use --advertise-addr to specify the address advertised to other members of the swarm, for API access & networking
-22 : unclear why these are all joined to port 2377 but everyone did that so I did too
-   : docker node ls lists all nodes in swarm; wish it said "worker" for workers but it's just blank
+
+22 : "docker node ls" lists all nodes in swarm; wish it said "worker" for workers but it's just blank
+   : unclear why these are all joined to port 2377 but everyone did that so I did too
+
 23 : -d [arg] to set the driver to manage the network; here, overlay
+
 27 : Not sure how to isolate to only 1 task
    : also, do we want the -f flag for live update?
+
 30 : In what way are the task logs fun?
+
 34 : -y option passes the "yes" without having to be asked
 
 ------
